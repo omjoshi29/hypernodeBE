@@ -27,16 +27,30 @@ io.on("connection", async (ws) => {
     if (!msg) {
       ws.emit("message", { server: "give valid input", client: "" });
     } else if (msg.includes("ello")) {
-      let data = { client: msg, server: "how are you?" };
+      let data = { client: msg, server: "what is your name?" };
       Chatdata(data);
       io.emit("message", data);
-    } else if (msg.includes("fine")) {
+    } else if (msg.includes("I am") || msg.includes("i am")) {
+      msg = msg.split(" ")[2];
+      let data = { client: msg, server: `hello ${msg}, how are you` };
+      Chatdata(data);
+      io.emit("message", data);
+    } else if (
+      msg.includes("fine") ||
+      msg.includes("good") ||
+      msg.includes("awesome") ||
+      msg.includes("great")
+    ) {
       let choice = await category.find();
-      let data = { client: msg, server: "which field do you want?", choice };
+      let data = {
+        client: msg,
+        server: "which field are you interested in?",
+        choice,
+      };
       Chatdata(data);
       io.emit("message", data);
     } else if (msg === "reset") {
-      let del = await Bot.deleteMany({ server: { $ne: "Hello user" } });
+      let del = await Bot.deleteMany({});
       let chat = await Bot.find();
       io.emit("history", chat);
     } else if (msg) {
@@ -61,7 +75,7 @@ io.on("connection", async (ws) => {
           ]);
           let data = {
             client: msg,
-            server: "which course you are interested in ?",
+            server: "which course are you interested in?",
             choice: subs,
           };
           Chatdata(data);
@@ -73,7 +87,8 @@ io.on("connection", async (ws) => {
           flag = true;
           let data = {
             client: msg,
-            server: "below is the link to the selected courses",
+            server:
+              "we found some great courses for you, please click the link given below",
             link: `/${msg}`,
           };
           Chatdata(data);
