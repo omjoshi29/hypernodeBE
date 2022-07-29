@@ -26,4 +26,28 @@ courseRouter.get("/python", async (req, res) => {
   res.status(201).send(pythonlist);
 });
 
+courseRouter.get("/javascript/filter", async (req, res) => {
+  let data;
+  if (req.query.platform) {
+    data = await jscourses.find({ platform: req.query.platform });
+  }
+  res.status(201).send(data);
+});
+
+courseRouter.get("/java/filter", async (req, res) => {
+  let data;
+  if (req.query.platform) {
+    data = await javacourses.find({ platform: req.query.platform });
+  }
+  res.status(201).send(data);
+});
+
+courseRouter.get("/python/filter", async (req, res) => {
+  let data;
+  if (req.query.platform) {
+    data = await pythoncourses.find({ platform: req.query.platform });
+  }
+  res.status(201).send(data);
+});
+
 module.exports = courseRouter;
