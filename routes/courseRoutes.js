@@ -7,6 +7,10 @@ const {
 
 const courseRouter = Router();
 
+courseRouter.get("/", async (req, res) => {
+  res.status(201).send("welcome to hypernode!");
+});
+
 courseRouter.get("/javascript", async (req, res) => {
   let jslist = await jscourses.find();
   res.status(201).send(jslist);
