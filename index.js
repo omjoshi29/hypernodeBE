@@ -26,11 +26,14 @@ io.on("connection", async (ws) => {
   ws.on("message", async (msg) => {
     if (!msg) {
       ws.emit("message", { server: "give valid input", client: "" });
-    } else if (msg.includes("ello")) {
+    } else if (msg.includes("ello") || msg.includes("hi")) {
       let data = { client: msg, server: "what is your name?" };
       Chatdata(data);
       io.emit("message", data);
-    } else if (msg.includes("I am") || msg.includes("i am")) {
+    } else if (
+      !msg.includes("fine") &&
+      (msg.includes("I am") || msg.includes("i am"))
+    ) {
       msg = msg.split(" ")[2];
       let data = { client: msg, server: `hello ${msg}, how are you` };
       Chatdata(data);
